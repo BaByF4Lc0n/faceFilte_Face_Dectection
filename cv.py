@@ -4,15 +4,6 @@ import os
 import time
 
 def overlay_image(background, foreground, x, y):
-    """
-    Overlays a foreground image onto a background image at a specified position.
-
-    Args:
-        background: The background image (NumPy array).
-        foreground: The foreground image (NumPy array) to overlay.
-        x: The x-coordinate of the top-left corner of the foreground image.
-        y: The y-coordinate of the top-left corner of the foreground image.
-    """
     # Get dimensions
     bg_h, bg_w, _ = background.shape
     fg_h, fg_w = foreground.shape[:2]
@@ -81,7 +72,7 @@ def main():
 
     # Check if the folder exists
     if not os.path.exists(face_images_folder):
-        print(f"Error: Face images folder '{face_images_folder}' not found.")
+        print(f"face images folder '{face_images_folder}' not found")
         return
 
     # Load the list of image files in the folder
@@ -91,7 +82,7 @@ def main():
 
     # Check if there are image files in the folder
     if not face_image_files:
-        print(f"Error: No face image files found in '{face_images_folder}'.")
+        print(f"no face imagein '{face_images_folder}")
         return
 
     # Pre-resize overlay images and store in a dictionary
@@ -106,7 +97,7 @@ def main():
             width = int(face_image.shape[1] * ratio)
             resized_face_images[file] = cv2.resize(face_image, (width, height))
         else:
-            print(f"Error: Could not load face image '{face_image_path}'.")
+            print(f"cannot load face image {face_image_path}")
 
     # Open the webcam
     cap = cv2.VideoCapture(0)
@@ -130,7 +121,7 @@ def main():
         ret, frame = cap.read()
 
         if not ret:
-            print("Error: Could not read frame from webcam.")
+            print("Error")
             break
 
         # Convert the frame to grayscale
@@ -188,8 +179,7 @@ def main():
 
             # Calculate image display position (on the head)
             overlay_x = x
-            overlay_y = y - int(h * 1.5)  # Above the head (subtract face height * 1.5)
-            # Determine the size for overlay
+            overlay_y = y - int(h * 1.5)
             resize_w = w
             resize_h = h
             # Resize if it too big or small.
@@ -236,8 +226,6 @@ def main():
                 display_image[face_id] = (display_image[face_id] - 1) % len(face_image_files)
 
         frame_count += 1  # update the frame_count
-
-    # Release the webcam and close all windows
     cap.release()
     cv2.destroyAllWindows()
 
